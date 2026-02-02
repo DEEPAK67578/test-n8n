@@ -1,0 +1,284 @@
+{
+  "updatedAt": "2026-01-31T22:57:18.183Z",
+  "createdAt": "2026-01-31T22:53:40.526Z",
+  "id": "LdXdEePyKvMVwJRt",
+  "name": "Venkat Secure LLM Orchestrator",
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "typeVersion": 1,
+      "position": [
+        608,
+        512
+      ],
+      "type": "n8n-nodes-base.start",
+      "id": "start-node",
+      "name": "Start"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfe0a6c2-5a8d-4ef2-91eb-be817a9c647e",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5f7b3f9f-ab0b-4f81-80c2-50d4f1b8a4f9",
+      "typeVersion": 3.4,
+      "name": "Set System Instructions",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        800,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "path": "b9cf1868-e37f-411d-903e-4de1d50030fa",
+        "formTitle": "Create Brand Voice",
+        "options": {}
+      },
+      "id": "e0970a01-e238-4e58-9c17-91a619d021c2",
+      "name": "User Input Form",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 1,
+      "position": [
+        608,
+        704
+      ],
+      "webhookId": "b9cf1868-e37f-411d-903e-4de1d50030fa"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "bf4c3b7f-3b6c-4b5c-897c-9b62a6b2c2a0",
+      "name": "Set System Instructions (Form)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a2b4e4a7-8f5c-4e89-8a5e-9e7f4d2f0c7e",
+      "name": "Assemble Prompt",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1008,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "model": "openai",
+        "modelId": "gpt-4",
+        "promptKey": "prompt"
+      },
+      "id": "f1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+      "name": "Call LLM",
+      "type": "n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        704
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $('User Input Form').item.json.communication_mode }}",
+              "value2": "whatsapp"
+            }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5e",
+      "name": "Communication Switch",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1408,
+        704
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "b1c2d3e4-f5g6-4h7i-8j9k-0l1m2n3o4p5q",
+      "name": "Send WhatsApp",
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        608
+      ],
+      "webhookId": "b8723c35-6197-43b8-8a15-a12bcbe66bef"
+    },
+    {
+      "parameters": {
+        "subject": "Your requested information",
+        "fromEmail": "noreply@example.com",
+        "html": "<p>{{ $('Call LLM').item.json.text }}</p>",
+        "toEmail": "={{ $('User Input Form').item.json.user_identifier }}"
+      },
+      "id": "c1d2e3f4-g5h6-4i7j-8k9l-0m1n2o3p4q5r",
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 3,
+      "position": [
+        1600,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d1e2f3g4-h5i6-4j7k-8l9m-0n1o2p3q4r5s",
+      "name": "Respond to Form",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [
+        1808,
+        704
+      ]
+    }
+  ],
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Set System Instructions",
+            "type": "main",
+            "socket": "input",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "User Input Form": {
+      "main": [
+        [
+          {
+            "node": "Set System Instructions (Form)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set System Instructions (Form)": {
+      "main": [
+        [
+          {
+            "node": "Assemble Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Assemble Prompt": {
+      "main": [
+        [
+          {
+            "node": "Call LLM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call LLM": {
+      "main": [
+        [
+          {
+            "node": "Communication Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Communication Switch": {
+      "main": [
+        [
+          {
+            "node": "Send WhatsApp",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Respond to Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Respond to Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveManualExecutions": true,
+    "saveExecutionProgress": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "14fd075e-4ec6-48aa-b3dc-92097af3012c",
+  "activeVersionId": null,
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-01-31T22:53:40.532Z",
+      "createdAt": "2026-01-31T22:53:40.532Z",
+      "role": "workflow:owner",
+      "workflowId": "LdXdEePyKvMVwJRt",
+      "projectId": "dNAUCjIYq35LX4Np"
+    }
+  ],
+  "activeVersion": null,
+  "tags": []
+}

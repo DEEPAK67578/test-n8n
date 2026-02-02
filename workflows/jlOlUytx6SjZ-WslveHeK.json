@@ -1,0 +1,142 @@
+{
+  "updatedAt": "2026-01-27T12:01:21.424Z",
+  "createdAt": "2026-01-23T12:26:19.729Z",
+  "id": "jlOlUytx6SjZ-WslveHeK",
+  "name": "[Production] Error Trigger",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        32
+      ],
+      "id": "f138900e-c49b-4899-ae10-d5cc174b88a0",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://secondsutra.com/django/api/n8n/send_debug_email/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name: {{$json.workflow.name}} , Workflow Err: {{ $json.execution.error.message }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -112,
+        32
+      ],
+      "id": "1ddbefc6-fb9e-4441-8e26-1bc2fee72378",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "W5rIXol9OgJjIWb5",
+          "name": "Production"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "35c62459-88ca-4594-9685-b2ef51aa6389",
+  "activeVersionId": "35c62459-88ca-4594-9685-b2ef51aa6389",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-01-23T12:26:19.733Z",
+      "createdAt": "2026-01-23T12:26:19.733Z",
+      "role": "workflow:owner",
+      "workflowId": "jlOlUytx6SjZ-WslveHeK",
+      "projectId": "dNAUCjIYq35LX4Np"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-01-27T12:01:25.000Z",
+    "createdAt": "2026-01-27T12:01:21.428Z",
+    "versionId": "35c62459-88ca-4594-9685-b2ef51aa6389",
+    "workflowId": "jlOlUytx6SjZ-WslveHeK",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          -320,
+          32
+        ],
+        "id": "f138900e-c49b-4899-ae10-d5cc174b88a0",
+        "name": "Error Trigger"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://secondsutra.com/django/api/n8n/send_debug_email/",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name: {{$json.workflow.name}} , Workflow Err: {{ $json.execution.error.message }}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          -112,
+          32
+        ],
+        "id": "1ddbefc6-fb9e-4441-8e26-1bc2fee72378",
+        "name": "HTTP Request",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "W5rIXol9OgJjIWb5",
+            "name": "Production"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Secondsutra Matrimony",
+    "name": "Version 35c62459",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}

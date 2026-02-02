@@ -1,0 +1,144 @@
+{
+  "updatedAt": "2026-01-23T12:30:21.743Z",
+  "createdAt": "2026-01-23T11:16:03.396Z",
+  "id": "_KXXj024wFc7IC0pcz4Tl",
+  "name": "[Staging] Error Trigger",
+  "active": true,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        48
+      ],
+      "id": "25841e8b-07a2-4bdb-a958-1b6f109b562b",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://staging.secondsutra.com/django/api/n8n/send_debug_email/",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBearerAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name {{$json.workflow.name}} , Workflow Err: {{$json.execution.error.message}}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -160,
+        48
+      ],
+      "id": "e7c9d2c5-3afa-4b44-b41d-d0f2f947c2c6",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBearerAuth": {
+          "id": "wSqShOmc8HNxjkk9",
+          "name": "Staging"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "dbab4aa3-46d5-4b1f-a960-6dde8c4860d6",
+  "activeVersionId": "8467fcee-a34a-46b2-83e2-69e44949dec3",
+  "triggerCount": 0,
+  "shared": [
+    {
+      "updatedAt": "2026-01-23T11:16:03.402Z",
+      "createdAt": "2026-01-23T11:16:03.402Z",
+      "role": "workflow:owner",
+      "workflowId": "_KXXj024wFc7IC0pcz4Tl",
+      "projectId": "GR72l49U6889HkuC"
+    }
+  ],
+  "activeVersion": {
+    "updatedAt": "2026-01-23T12:22:04.000Z",
+    "createdAt": "2026-01-23T12:20:46.601Z",
+    "versionId": "8467fcee-a34a-46b2-83e2-69e44949dec3",
+    "workflowId": "_KXXj024wFc7IC0pcz4Tl",
+    "nodes": [
+      {
+        "parameters": {},
+        "type": "n8n-nodes-base.errorTrigger",
+        "typeVersion": 1,
+        "position": [
+          -368,
+          48
+        ],
+        "id": "25841e8b-07a2-4bdb-a958-1b6f109b562b",
+        "name": "Error Trigger"
+      },
+      {
+        "parameters": {
+          "method": "POST",
+          "url": "https://staging.secondsutra.com/django/api/n8n/send_debug_email/",
+          "authentication": "genericCredentialType",
+          "genericAuthType": "httpBearerAuth",
+          "sendBody": true,
+          "specifyBody": "json",
+          "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name {{$json.workflow.name}} , Workflow Err: {{$json.execution.error}}\"\n}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequest",
+        "typeVersion": 4.3,
+        "position": [
+          -160,
+          48
+        ],
+        "id": "e7c9d2c5-3afa-4b44-b41d-d0f2f947c2c6",
+        "name": "HTTP Request",
+        "credentials": {
+          "httpBearerAuth": {
+            "id": "wSqShOmc8HNxjkk9",
+            "name": "Staging"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Error Trigger": {
+        "main": [
+          [
+            {
+              "node": "HTTP Request",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "authors": "Deepak Prakash",
+    "name": "Version 8467fcee",
+    "description": "",
+    "autosaved": true
+  },
+  "tags": []
+}
