@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-02-02T10:18:34.635Z",
+  "updatedAt": "2026-02-02T10:51:07.403Z",
   "createdAt": "2026-02-02T09:02:27.305Z",
   "id": "4P472PZn-WHQy1bGexu7k",
   "name": "Workflow Github Backup",
@@ -33,7 +33,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        -96,
+        -160,
         0
       ],
       "id": "e20c9f17-44fb-4471-a12b-706e594fe852",
@@ -47,34 +47,133 @@
     },
     {
       "parameters": {
-        "resource": "file",
-        "owner": {
-          "__rl": true,
-          "value": "DEEPAK67578",
-          "mode": "list",
-          "cachedResultName": "DEEPAK67578",
-          "cachedResultUrl": "https://github.com/DEEPAK67578"
-        },
-        "repository": {
-          "__rl": true,
-          "value": "test-n8n",
-          "mode": "list",
-          "cachedResultName": "test-n8n",
-          "cachedResultUrl": "https://github.com/DEEPAK67578/test-n8n"
-        },
-        "filePath": "={{ $json.filename }}",
-        "fileContent": "=",
-        "commitMessage": "=feat: {{ $('Schedule Trigger').item.json.timestamp }} Commited"
+        "url": "https://api.github.com/repos/DEEPAK67578/test-n8n/git/ref/heads/main",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "options": {}
       },
-      "type": "n8n-nodes-base.github",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
       "position": [
-        592,
+        320,
         0
       ],
-      "id": "748a0554-715c-456a-8713-71aae38da5b5",
-      "name": "Create a file",
-      "webhookId": "b114b480-ebd2-41ad-abcf-0ba1b355f714",
+      "id": "772443fc-b97e-4ca5-b353-ad9fcc106213",
+      "name": "Get Tree Sha request",
+      "credentials": {
+        "githubApi": {
+          "id": "i8NR2DkhxXvPjNxs",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://api.github.com/repos/DEEPAK67578/test-n8n/git/commits/{{ $json.object.sha }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        576,
+        0
+      ],
+      "id": "1e0259ec-f874-472f-8022-994ea050c684",
+      "name": "Get base tree SHA",
+      "credentials": {
+        "githubApi": {
+          "id": "i8NR2DkhxXvPjNxs",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const files = [];\n\nfor (const it of item.json.data) {\n  if (!it?.id) continue;\n\n  files.push({\n    path: `workflows/${it.id}.json`,\n    mode: \"100644\",\n    type: \"blob\",\n    content: JSON.stringify(it, null, 2),\n  });\n}\n\nreturn {\n    json: {\n      files\n    }\n  }\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        112,
+        0
+      ],
+      "id": "e2ebf79a-5b7a-4251-9f0b-5fe8dabc30a6",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/DEEPAK67578/test-n8n/git/trees",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"base_tree\": \"{{ $json.sha }}\",\n  \"tree\": {{ JSON.stringify($('Code in JavaScript').item.json.files )}}\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        816,
+        0
+      ],
+      "id": "c08b39cd-6485-448b-9f3c-c7a702c1c009",
+      "name": "Post Tree Value",
+      "credentials": {
+        "githubApi": {
+          "id": "i8NR2DkhxXvPjNxs",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/DEEPAK67578/test-n8n/git/commits",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"message\": \"n8n workflow backup {{$now}}\",\n  \"tree\": \"{{ $json.sha }}\",\n  \"parents\": [\"{{ $('Get Tree Sha request').item.json.object.sha }}\"]\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1104,
+        0
+      ],
+      "id": "a698db60-cbe7-4311-9aec-7a3ecde17a50",
+      "name": "Commit Message",
+      "credentials": {
+        "githubApi": {
+          "id": "i8NR2DkhxXvPjNxs",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.github.com/repos/DEEPAK67578/test-n8n/git/refs/heads/main\n",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "githubApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"sha\": \"{{ $json.sha }}\"\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1360,
+        0
+      ],
+      "id": "c119dcf1-fe0e-43fd-9fda-e234183e8add",
+      "name": "Push Commit",
       "credentials": {
         "githubApi": {
           "id": "i8NR2DkhxXvPjNxs",
@@ -97,12 +196,68 @@
     },
     "HTTP Request": {
       "main": [
-        []
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
-    "Create a file": {
+    "Get Tree Sha request": {
       "main": [
-        []
+        [
+          {
+            "node": "Get base tree SHA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get base tree SHA": {
+      "main": [
+        [
+          {
+            "node": "Post Tree Value",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get Tree Sha request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Tree Value": {
+      "main": [
+        [
+          {
+            "node": "Commit Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commit Message": {
+      "main": [
+        [
+          {
+            "node": "Push Commit",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -115,7 +270,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "d7a5932f-ea43-4641-aea5-94835ab87afe",
+  "versionId": "18bfd659-3ade-4a28-8bd1-d9e8a1e486fe",
   "activeVersionId": null,
   "triggerCount": 0,
   "shared": [
