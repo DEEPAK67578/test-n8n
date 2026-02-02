@@ -1,0 +1,5172 @@
+{
+  "data": [
+    {
+      "updatedAt": "2026-02-02T10:00:15.464Z",
+      "createdAt": "2026-02-02T09:02:27.305Z",
+      "id": "4P472PZn-WHQy1bGexu7k",
+      "name": "Workflow Github Backup",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "rule": {
+              "interval": [
+                {}
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.scheduleTrigger",
+          "typeVersion": 1.3,
+          "position": [
+            -416,
+            0
+          ],
+          "id": "32f75a9a-f5d4-44a4-adbd-09f3d59ff1c6",
+          "name": "Schedule Trigger"
+        },
+        {
+          "parameters": {
+            "url": "https://n8n.secondsutra.com/api/v1/workflows",
+            "authentication": "predefinedCredentialType",
+            "nodeCredentialType": "n8nApi",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -208,
+            0
+          ],
+          "id": "e20c9f17-44fb-4471-a12b-706e594fe852",
+          "name": "HTTP Request",
+          "credentials": {
+            "n8nApi": {
+              "id": "jVRAufJkXnblO4UT",
+              "name": "n8n account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "jsCode": "return items.map(item => {\n  return {\n    json: {\n      filename: `workflows/${$input.first().json.data[0].id}.json`,\n      content: JSON.stringify(item.json, null, 2),\n    }\n  };\n});"
+          },
+          "type": "n8n-nodes-base.code",
+          "typeVersion": 2,
+          "position": [
+            48,
+            0
+          ],
+          "id": "215862b7-e377-423d-bfa4-f96e2b0e042c",
+          "name": "Code in JavaScript"
+        },
+        {
+          "parameters": {
+            "resource": "repository",
+            "operation": "get",
+            "owner": {
+              "__rl": true,
+              "value": "DEEPAK67578",
+              "mode": "list",
+              "cachedResultName": "DEEPAK67578",
+              "cachedResultUrl": "https://github.com/DEEPAK67578"
+            },
+            "repository": {
+              "__rl": true,
+              "mode": "list",
+              "value": ""
+            }
+          },
+          "type": "n8n-nodes-base.github",
+          "typeVersion": 1.1,
+          "position": [
+            256,
+            0
+          ],
+          "id": "748a0554-715c-456a-8713-71aae38da5b5",
+          "name": "Get a repository",
+          "webhookId": "b114b480-ebd2-41ad-abcf-0ba1b355f714",
+          "credentials": {
+            "githubApi": {
+              "id": "i8NR2DkhxXvPjNxs",
+              "name": "GitHub account"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Schedule Trigger": {
+          "main": [
+            [
+              {
+                "node": "HTTP Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HTTP Request": {
+          "main": [
+            [
+              {
+                "node": "Code in JavaScript",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Code in JavaScript": {
+          "main": [
+            [
+              {
+                "node": "Get a repository",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": false
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "addf582b-7f88-4532-9b6b-85ead7d0adeb",
+      "activeVersionId": null,
+      "triggerCount": 0,
+      "shared": [
+        {
+          "updatedAt": "2026-02-02T09:02:27.318Z",
+          "createdAt": "2026-02-02T09:02:27.318Z",
+          "role": "workflow:owner",
+          "workflowId": "4P472PZn-WHQy1bGexu7k",
+          "projectId": "dNAUCjIYq35LX4Np"
+        }
+      ],
+      "activeVersion": null,
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-01-31T22:57:18.183Z",
+      "createdAt": "2026-01-31T22:53:40.526Z",
+      "id": "LdXdEePyKvMVwJRt",
+      "name": "Venkat Secure LLM Orchestrator",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {},
+          "typeVersion": 1,
+          "position": [
+            608,
+            512
+          ],
+          "type": "n8n-nodes-base.start",
+          "id": "start-node",
+          "name": "Start"
+        },
+        {
+          "parameters": {
+            "assignments": {
+              "assignments": [
+                {
+                  "id": "cfe0a6c2-5a8d-4ef2-91eb-be817a9c647e",
+                  "name": "",
+                  "value": "",
+                  "type": "string"
+                }
+              ]
+            },
+            "options": {}
+          },
+          "id": "5f7b3f9f-ab0b-4f81-80c2-50d4f1b8a4f9",
+          "typeVersion": 3.4,
+          "name": "Set System Instructions",
+          "type": "n8n-nodes-base.set",
+          "position": [
+            800,
+            512
+          ]
+        },
+        {
+          "parameters": {
+            "path": "b9cf1868-e37f-411d-903e-4de1d50030fa",
+            "formTitle": "Create Brand Voice",
+            "options": {}
+          },
+          "id": "e0970a01-e238-4e58-9c17-91a619d021c2",
+          "name": "User Input Form",
+          "type": "n8n-nodes-base.formTrigger",
+          "typeVersion": 1,
+          "position": [
+            608,
+            704
+          ],
+          "webhookId": "b9cf1868-e37f-411d-903e-4de1d50030fa"
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "id": "bf4c3b7f-3b6c-4b5c-897c-9b62a6b2c2a0",
+          "name": "Set System Instructions (Form)",
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            800,
+            704
+          ]
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "id": "a2b4e4a7-8f5c-4e89-8a5e-9e7f4d2f0c7e",
+          "name": "Assemble Prompt",
+          "type": "n8n-nodes-base.set",
+          "typeVersion": 3.4,
+          "position": [
+            1008,
+            704
+          ]
+        },
+        {
+          "parameters": {
+            "model": "openai",
+            "modelId": "gpt-4",
+            "promptKey": "prompt"
+          },
+          "id": "f1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d",
+          "name": "Call LLM",
+          "type": "n8n-nodes-langchain.chainLlm",
+          "typeVersion": 1,
+          "position": [
+            1200,
+            704
+          ]
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "string": [
+                {
+                  "value1": "={{ $('User Input Form').item.json.communication_mode }}",
+                  "value2": "whatsapp"
+                }
+              ]
+            }
+          },
+          "id": "a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5e",
+          "name": "Communication Switch",
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 1,
+          "position": [
+            1408,
+            704
+          ]
+        },
+        {
+          "parameters": {},
+          "id": "b1c2d3e4-f5g6-4h7i-8j9k-0l1m2n3o4p5q",
+          "name": "Send WhatsApp",
+          "type": "n8n-nodes-base.whatsApp",
+          "typeVersion": 1,
+          "position": [
+            1600,
+            608
+          ],
+          "webhookId": "b8723c35-6197-43b8-8a15-a12bcbe66bef"
+        },
+        {
+          "parameters": {
+            "subject": "Your requested information",
+            "fromEmail": "noreply@example.com",
+            "html": "<p>{{ $('Call LLM').item.json.text }}</p>",
+            "toEmail": "={{ $('User Input Form').item.json.user_identifier }}"
+          },
+          "id": "c1d2e3f4-g5h6-4i7j-8k9l-0m1n2o3p4q5r",
+          "name": "Send Email",
+          "type": "n8n-nodes-base.emailSend",
+          "typeVersion": 3,
+          "position": [
+            1600,
+            800
+          ]
+        },
+        {
+          "parameters": {
+            "options": {}
+          },
+          "id": "d1e2f3g4-h5i6-4j7k-8l9m-0n1o2p3q4r5s",
+          "name": "Respond to Form",
+          "type": "n8n-nodes-base.respondToWebhook",
+          "typeVersion": 1,
+          "position": [
+            1808,
+            704
+          ]
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Set System Instructions",
+                "type": "main",
+                "socket": "input",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "User Input Form": {
+          "main": [
+            [
+              {
+                "node": "Set System Instructions (Form)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Set System Instructions (Form)": {
+          "main": [
+            [
+              {
+                "node": "Assemble Prompt",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Assemble Prompt": {
+          "main": [
+            [
+              {
+                "node": "Call LLM",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Call LLM": {
+          "main": [
+            [
+              {
+                "node": "Communication Switch",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Communication Switch": {
+          "main": [
+            [
+              {
+                "node": "Send WhatsApp",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Send Email",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send WhatsApp": {
+          "main": [
+            [
+              {
+                "node": "Respond to Form",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send Email": {
+          "main": [
+            [
+              {
+                "node": "Respond to Form",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "saveDataErrorExecution": "all",
+        "saveDataSuccessExecution": "all",
+        "saveManualExecutions": true,
+        "saveExecutionProgress": true,
+        "callerPolicy": "workflowsFromSameOwner",
+        "availableInMCP": false
+      },
+      "staticData": null,
+      "meta": null,
+      "pinData": {},
+      "versionId": "14fd075e-4ec6-48aa-b3dc-92097af3012c",
+      "activeVersionId": null,
+      "triggerCount": 0,
+      "shared": [
+        {
+          "updatedAt": "2026-01-31T22:53:40.532Z",
+          "createdAt": "2026-01-31T22:53:40.532Z",
+          "role": "workflow:owner",
+          "workflowId": "LdXdEePyKvMVwJRt",
+          "projectId": "dNAUCjIYq35LX4Np"
+        }
+      ],
+      "activeVersion": null,
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-01-23T12:30:21.743Z",
+      "createdAt": "2026-01-23T11:16:03.396Z",
+      "id": "_KXXj024wFc7IC0pcz4Tl",
+      "name": "[Staging] Error Trigger",
+      "active": true,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.errorTrigger",
+          "typeVersion": 1,
+          "position": [
+            -368,
+            48
+          ],
+          "id": "25841e8b-07a2-4bdb-a958-1b6f109b562b",
+          "name": "Error Trigger"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_debug_email/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name {{$json.workflow.name}} , Workflow Err: {{$json.execution.error.message}}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -160,
+            48
+          ],
+          "id": "e7c9d2c5-3afa-4b44-b41d-d0f2f947c2c6",
+          "name": "HTTP Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Error Trigger": {
+          "main": [
+            [
+              {
+                "node": "HTTP Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": false
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "dbab4aa3-46d5-4b1f-a960-6dde8c4860d6",
+      "activeVersionId": "8467fcee-a34a-46b2-83e2-69e44949dec3",
+      "triggerCount": 0,
+      "shared": [
+        {
+          "updatedAt": "2026-01-23T11:16:03.402Z",
+          "createdAt": "2026-01-23T11:16:03.402Z",
+          "role": "workflow:owner",
+          "workflowId": "_KXXj024wFc7IC0pcz4Tl",
+          "projectId": "GR72l49U6889HkuC"
+        }
+      ],
+      "activeVersion": {
+        "updatedAt": "2026-01-23T12:22:04.000Z",
+        "createdAt": "2026-01-23T12:20:46.601Z",
+        "versionId": "8467fcee-a34a-46b2-83e2-69e44949dec3",
+        "workflowId": "_KXXj024wFc7IC0pcz4Tl",
+        "nodes": [
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.errorTrigger",
+            "typeVersion": 1,
+            "position": [
+              -368,
+              48
+            ],
+            "id": "25841e8b-07a2-4bdb-a958-1b6f109b562b",
+            "name": "Error Trigger"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_debug_email/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name {{$json.workflow.name}} , Workflow Err: {{$json.execution.error}}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -160,
+              48
+            ],
+            "id": "e7c9d2c5-3afa-4b44-b41d-d0f2f947c2c6",
+            "name": "HTTP Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          }
+        ],
+        "connections": {
+          "Error Trigger": {
+            "main": [
+              [
+                {
+                  "node": "HTTP Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "authors": "Deepak Prakash",
+        "name": "Version 8467fcee",
+        "description": "",
+        "autosaved": true
+      },
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-02-02T04:48:18.517Z",
+      "createdAt": "2026-01-23T07:56:11.931Z",
+      "id": "aEkCg1Qf61ABqfwdGuELm",
+      "name": "[Staging] CRM Webhook Flow",
+      "active": true,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "path": "n8n-staging",
+            "authentication": "jwtAuth",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            -1984,
+            1040
+          ],
+          "id": "19c52eec-1558-4292-b269-1a725d462f1e",
+          "name": "Webhook",
+          "webhookId": "d0ab68d7-6529-4abe-acd6-90b61b982039",
+          "credentials": {
+            "jwtAuth": {
+              "id": "ANJkzhTnyvKyEJC3",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -16,
+            656
+          ],
+          "id": "eeb4ea76-fe3a-40b8-b6fd-ffcd8b7ec661",
+          "name": "Complete Register Mail Sent Tag Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"email_template\": \"follow_up_email\",\n  \"user_id\": \"{{ $json.zm_id\n }}\",\n  \"title\": \"test\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -352,
+            640
+          ],
+          "id": "ec968204-96e8-4b09-8595-c3218adcb37a",
+          "name": "Complete Register Mail Template Send Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                  "leftValue": "={{ $json.is_target_audience }}",
+                  "rightValue": true,
+                  "operator": {
+                    "type": "boolean",
+                    "operation": "equals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            -336,
+            208
+          ],
+          "id": "77a03d95-ce29-4848-90e9-8e633ef0a5fb",
+          "name": "If user target audience"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\" : \"{{ $('Get User Details after 30m').item.json.zm_id }}\",\n  \"template_name\": \"registration_followup_target_audience\"\n} ",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            0,
+            0
+          ],
+          "id": "890afb44-c074-41e6-a7e1-0bc2245d4ec2",
+          "name": "Send whatsapp followup for the user",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "amount": 2,
+            "unit": "minutes"
+          },
+          "type": "n8n-nodes-base.wait",
+          "typeVersion": 1.1,
+          "position": [
+            -1184,
+            528
+          ],
+          "id": "a74ec33b-f5b4-4d3d-b16e-f69322576ca9",
+          "name": "Wait for 30m",
+          "webhookId": "9ed6df2b-4769-4638-9dad-3037e4ecb868"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register WhatsApp Sent\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            320,
+            0
+          ],
+          "id": "64f29547-bb34-4e90-a188-96efb7c37630",
+          "name": "Complete Register WhatsApp Sent Tag Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://staging.secondsutra.com/django/api/n8n/get_user_details/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            512,
+            656
+          ],
+          "id": "58c5bda5-1cc9-47cd-970a-298b22461e6f",
+          "name": "Get User Details after 24 hours",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://staging.secondsutra.com/django/api/n8n/get_user_details/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -880,
+            432
+          ],
+          "id": "15249f54-56fd-480d-ba2a-bfa307539912",
+          "name": "Get User Details after 30m",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                  "leftValue": "={{ $json.step }}",
+                  "rightValue": "",
+                  "operator": {
+                    "type": "string",
+                    "operation": "empty",
+                    "singleValue": true
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            768,
+            656
+          ],
+          "id": "ddbcfa77-69b2-4781-abae-771ac10c0815",
+          "name": "User Step If it is none after 24 hours"
+        },
+        {
+          "parameters": {
+            "amount": 24,
+            "unit": "hours"
+          },
+          "type": "n8n-nodes-base.wait",
+          "typeVersion": 1.1,
+          "position": [
+            272,
+            656
+          ],
+          "id": "b478b9ca-577c-4c2c-abb3-6b4deda44214",
+          "name": "Wait 24 hours",
+          "webhookId": "70094f88-3112-4582-96d5-c2188bf9dbe2",
+          "disabled": true
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Call this lead\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            1504,
+            880
+          ],
+          "id": "aa929613-52be-4904-adb5-0a4fa76dabea",
+          "name": "Call this lead Tag Added",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                  "leftValue": "={{ $json.is_target_audience }}",
+                  "rightValue": true,
+                  "operator": {
+                    "type": "boolean",
+                    "operation": "equals"
+                  }
+                },
+                {
+                  "id": "bf6242b0-2150-4a9f-9ed1-82f96201a82b",
+                  "leftValue": "={{ $json.matrimony_profile.marital_status }}",
+                  "rightValue": "Never married",
+                  "operator": {
+                    "type": "string",
+                    "operation": "notEquals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            1168,
+            896
+          ],
+          "id": "1e5a3a77-37f2-40f6-a00f-94ef228df0d9",
+          "name": "If user target audience and not a never married"
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                  "leftValue": "={{ $json.step }}",
+                  "rightValue": "",
+                  "operator": {
+                    "type": "string",
+                    "operation": "empty",
+                    "singleValue": true
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            -608,
+            416
+          ],
+          "id": "f0ee5e56-7610-48a1-b310-226d59f8b5dc",
+          "name": "User Step If check is empty"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/create_crm_comment_for_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"comment_text\": \"#robot #incomplete_registration Call & follow-up required.\",\n  \"is_todo\":true,\n  \"priority\":\"low\",\n  \"type\": \"incomplete_registration\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            1760,
+            880
+          ],
+          "id": "54fd89df-d5cc-4ba0-bda6-6aa7555955e4",
+          "name": "Create comment to follow up for CRM",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/remove_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\", \"Complete Register WhatsApp Sent\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            1136,
+            320
+          ],
+          "id": "382ba312-6e20-41c0-97b6-b12ebe10c88e",
+          "name": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://staging.secondsutra.com/django/api/n8n/get_user_details/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $json.body.payload.sender_id }}\"}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -736,
+            1088
+          ],
+          "id": "72ad4df1-8b92-4817-93ff-738db72df7eb",
+          "name": "Get User Details",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "rules": {
+              "values": [
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "new_user_registered_follow_up",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals"
+                        },
+                        "id": "890401b4-1b02-42ff-b04e-58b4e50925ab"
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "8c465457-1350-4ea0-bcc2-50d4f7635aed",
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "accepted_virtual_meet",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "fd75b266-bc3b-49fb-abf2-2d6bf6a7243e",
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "event_to_calender",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "f5355054-25b5-4444-8fc1-7b0322033694",
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "post_vm_feedback_followup",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.switch",
+          "typeVersion": 3.4,
+          "position": [
+            -1632,
+            928
+          ],
+          "id": "417d3003-7c81-497a-a876-d83907d947b7",
+          "name": "Event Cases"
+        },
+        {
+          "parameters": {
+            "content": "**Once Virtual Meet Accepted**",
+            "height": 80,
+            "width": 150
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "position": [
+            -1312,
+            1008
+          ],
+          "typeVersion": 1,
+          "id": "bff47342-e33e-43c9-88c6-10301c76f879",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"email_template\": \"vm_accepted_user_follow_up_email\",\n  \"send_push_notification\": true,\n    \"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n  \"title\": \"🎉 It’s a Yes! {{ $json.name }} is ready to meet\",\n  \"cta_text\": \"Schedule Virtual Meet\",\n  \"message\":\"{{ $json.name }} has accepted your virtual meet request. Share your availability to schedule the call.\",\n  \"redirect_url\":\"view-profile/{{ $json.zm_id }}\",\n  \"notification_type\":\"n8n_accepted_vm_push\",\n  \"other_user_id\":\"{{ $('Webhook').item.json.body.payload.sender_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -464,
+            1200
+          ],
+          "id": "523fde06-ac55-4921-820d-9910a15d73e3",
+          "name": "Email & Push Followup Notification",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n\"template_name\":\"virtual_meet_request_accepted\",\n\"other_user_id\" : \"{{ $('Send Immediately').item.json.body.payload.sender_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -480,
+            944
+          ],
+          "id": "4fc5cda6-e621-48e6-b960-eae264393e99",
+          "name": "WhatsApp Followup Notification",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "amount": 1
+          },
+          "type": "n8n-nodes-base.wait",
+          "typeVersion": 1.1,
+          "position": [
+            -944,
+            1088
+          ],
+          "id": "92d771d5-51f4-4402-9461-f3294e0bb44e",
+          "name": "Send Immediately",
+          "webhookId": "2a45f7c4-0d46-4522-b74b-2a5f0fb735d8"
+        },
+        {
+          "parameters": {
+            "calendar": {
+              "__rl": true,
+              "value": "c_7f6a2a89cf360f0a8e13cf52746ee9a170a041587a4716685744098b30baeda8@group.calendar.google.com",
+              "mode": "list",
+              "cachedResultName": "Virtual Meet F2F"
+            },
+            "start": "={{ new Date($json.body.payload.event_timing) }}",
+            "end": "={{ new Date(new Date($json.body.payload.event_timing).getTime() + 60 * 60 * 1000).toISOString() }}",
+            "useDefaultReminders": false,
+            "additionalFields": {
+              "attendees": [
+                "deepak@zentratech.com"
+              ],
+              "location": "={{ $json.body.payload.meet_link }}",
+              "sendUpdates": "all",
+              "summary": "={{ $json.body.payload.title }}"
+            },
+            "remindersUi": {
+              "remindersValues": [
+                {
+                  "method": "email",
+                  "minutes": 10
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.googleCalendar",
+          "typeVersion": 1.3,
+          "position": [
+            -880,
+            1440
+          ],
+          "id": "5279d686-d8c7-47fa-806e-e61c09f38bb0",
+          "name": "Create an event",
+          "credentials": {
+            "googleCalendarOAuth2Api": {
+              "id": "5hk2Cb5Rv7InK3EU",
+              "name": "Google Calendar account Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"email_template\": \"vm_post_successfull_follow_up_email\",\n  \"send_push_notification\": true,\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_1_id }}\",\n  \"virtual_meet_id\": {{ $('Webhook').item.json.body.payload.virtual_meet_id }},\n  \"title\": \"Hope your virtual meet went well 🎉\",\n  \"cta_text\": \"Rate & Help Others\",\n  \"message\":\"Take a moment to share your experience and help others on their journey.\",\n   \"redirect_url\":\"meet_link_schedule/{{ $json.body.payload.virtual_meet_id }}\",\n  \"notification_type\":\"n8n_post_vm_feedback_push\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1232,
+            2208
+          ],
+          "id": "9eda7b05-c7ba-4191-b1d7-ed53fe37af0c",
+          "name": "Post VM Feedback Followup Email and push notification(User 1)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"email_template\": \"vm_post_successfull_follow_up_email\",\n  \"send_push_notification\": true,\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_2_id }}\",\n  \"virtual_meet_id\": {{ $('Webhook').item.json.body.payload.virtual_meet_id }},\n  \"title\": \"Hope your virtual meet went well 🎉\",\n  \"cta_text\": \"Rate & Help Others\",\n  \"message\":\"Take a moment to share your experience and help others on their journey.\",\n  \"redirect_url\":\"meet_link_schedule/{{ $json.body.payload.virtual_meet_id }}\",\n  \"notification_type\":\"n8n_post_vm_feedback_push\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1168,
+            1920
+          ],
+          "id": "24e96f73-c002-41da-8535-e357f965d3a5",
+          "name": "Post VM Feedback Followup Email and Push Notification(User 2)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $('Webhook').item.json.body.payload.user_2_id }}\",\n\"template_name\":\"virtual_meet_post_scheduled\",\n\"virtual_meet_id\": \"{{ $('Webhook').item.json.body.payload.virtual_meet_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -784,
+            1920
+          ],
+          "id": "78da3783-3990-47b3-90ab-07f52a781d7b",
+          "name": "Post VM Feedback Whatsapp Followup(User 2)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $('Webhook').item.json.body.payload.user_1_id }}\",\n\"template_name\":\"virtual_meet_post_scheduled\",\n\"virtual_meet_id\": \"{{ $('Webhook').item.json.body.payload.virtual_meet_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -816,
+            2208
+          ],
+          "id": "a8077b4d-695f-4cda-8cb3-64c2bb9608a7",
+          "name": "Post VM Feedback Whatsapp Followup(User 1)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/get_base_whatsapp_html/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "{\n  \"user_id\": \"SS7411861\",\n  \"config\":{\n    \"subject\": \"Test, Your Secondsutra Matrimony Account Has Been Reactivated Successfully!\",\n    \"salutation\": \"Dear Test\",\n  \n    \"top_left_btn_text\": null,\n    \"top_left_btn_link\": null,\n  \n    \"card_content\": \"Test\",\n    \"content_above_card\": \"<div><p>We’re happy to inform you that your Secondsutra Matrimony account has been reactivated successfully.</p><p>You can now log in and continue using all features of the platform without any restrictions. Your profile is active, and you may resume browsing matches, sending interests, and chatting as usual.</p><p>If you have any questions or need assistance, feel free to reach out to our support team.</p><p>Thank you for choosing Secondsutra Matrimony.</p></div>\",\n  \n    \"content_below_bottom_center\":\"Test\",\n  \n    \"show_footer\": true,\n    \"footer_comma\": false,\n    \"footer_regards_text\": \"Warm regards,<br>SecondSutra Matrimony Team\",\n    \"show_team\": false\n  },\n  \"return_html\": true\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1024,
+            2912
+          ],
+          "id": "ccf0ad05-aacb-4ce1-88e2-f13e3d6488e0",
+          "name": "HTTP Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://staging.secondsutra.com/django/api/n8n/get_base_whatsapp_html/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "{\n  \"user_id\": \"SS7411861\",\n  \"config\":{\n    \"subject\": \"Test, Your Secondsutra Matrimony Account Has Been Reactivated Successfully!\",\n    \"salutation\": \"Dear Test\",\n  \n    \"top_left_btn_text\": null,\n    \"top_left_btn_link\": null,\n  \n    \"card_content\": null,\n    \"content_above_card\": \"<div><p>We’re happy to inform you that your Secondsutra Matrimony account has been reactivated successfully.</p><p>You can now log in and continue using all features of the platform without any restrictions. Your profile is active, and you may resume browsing matches, sending interests, and chatting as usual.</p><p>If you have any questions or need assistance, feel free to reach out to our support team.</p><p>Thank you for choosing Secondsutra Matrimony.</p></div>\",\n  \n    \"content_below_bottom_center\": null,\n  \n    \"show_footer\": false,\n    \"footer_comma\": false,\n    \"footer_regards_text\": \"Warm regards,<br>SecondSutra Matrimony Team\",\n    \"show_team\": false\n  }\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1024,
+            3200
+          ],
+          "id": "4db52f36-0748-47b7-aa39-2145477132e9",
+          "name": "HTTP Request1",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "wSqShOmc8HNxjkk9",
+              "name": "Staging"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "html": "{{ $json.data }}"
+          },
+          "type": "n8n-nodes-base.html",
+          "typeVersion": 1.2,
+          "position": [
+            -528,
+            2912
+          ],
+          "id": "48775da8-1ddc-475c-a399-4bf6e6d8a5de",
+          "name": "HTML"
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [
+            [
+              {
+                "node": "Event Cases",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Complete Register Mail Sent Tag Request": {
+          "main": [
+            [
+              {
+                "node": "Wait 24 hours",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Complete Register Mail Template Send Request": {
+          "main": [
+            [
+              {
+                "node": "Complete Register Mail Sent Tag Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If user target audience": {
+          "main": [
+            [
+              {
+                "node": "Send whatsapp followup for the user",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send whatsapp followup for the user": {
+          "main": [
+            [
+              {
+                "node": "Complete Register WhatsApp Sent Tag Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Wait for 30m": {
+          "main": [
+            [
+              {
+                "node": "Get User Details after 30m",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get User Details after 30m": {
+          "main": [
+            [
+              {
+                "node": "User Step If check is empty",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get User Details after 24 hours": {
+          "main": [
+            [
+              {
+                "node": "User Step If it is none after 24 hours",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "User Step If it is none after 24 hours": {
+          "main": [
+            [
+              {
+                "node": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "If user target audience and not a never married",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Wait 24 hours": {
+          "main": [
+            [
+              {
+                "node": "Get User Details after 24 hours",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If user target audience and not a never married": {
+          "main": [
+            [
+              {
+                "node": "Call this lead Tag Added",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Call this lead Tag Added": {
+          "main": [
+            [
+              {
+                "node": "Create comment to follow up for CRM",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "User Step If check is empty": {
+          "main": [
+            [],
+            [
+              {
+                "node": "If user target audience",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Complete Register Mail Template Send Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get User Details": {
+          "main": [
+            [
+              {
+                "node": "WhatsApp Followup Notification",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Email & Push Followup Notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Event Cases": {
+          "main": [
+            [
+              {
+                "node": "Wait for 30m",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Send Immediately",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Create an event",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Post VM Feedback Followup Email and push notification(User 1)",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Post VM Feedback Followup Email and Push Notification(User 2)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send Immediately": {
+          "main": [
+            [
+              {
+                "node": "Get User Details",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Create an event": {
+          "main": [
+            []
+          ]
+        },
+        "Post VM Feedback Followup Email and Push Notification(User 2)": {
+          "main": [
+            [
+              {
+                "node": "Post VM Feedback Whatsapp Followup(User 2)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Post VM Feedback Followup Email and push notification(User 1)": {
+          "main": [
+            [
+              {
+                "node": "Post VM Feedback Whatsapp Followup(User 1)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HTTP Request": {
+          "main": [
+            [
+              {
+                "node": "HTML",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "HTTP Request1": {
+          "main": [
+            []
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": false,
+        "timeSavedMode": "fixed",
+        "callerPolicy": "workflowsFromSameOwner",
+        "errorWorkflow": "_KXXj024wFc7IC0pcz4Tl"
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "2ba3ad88-14b4-476f-a87c-d4c2b0581c03",
+      "activeVersionId": "35706c3e-16b0-4df0-91eb-ddf9cdbf4639",
+      "triggerCount": 1,
+      "shared": [
+        {
+          "updatedAt": "2026-01-23T07:56:11.937Z",
+          "createdAt": "2026-01-23T07:56:11.937Z",
+          "role": "workflow:owner",
+          "workflowId": "aEkCg1Qf61ABqfwdGuELm",
+          "projectId": "GR72l49U6889HkuC"
+        }
+      ],
+      "activeVersion": {
+        "updatedAt": "2026-01-30T07:49:14.000Z",
+        "createdAt": "2026-01-30T07:48:55.403Z",
+        "versionId": "35706c3e-16b0-4df0-91eb-ddf9cdbf4639",
+        "workflowId": "aEkCg1Qf61ABqfwdGuELm",
+        "nodes": [
+          {
+            "parameters": {
+              "path": "n8n-staging",
+              "authentication": "jwtAuth",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2.1,
+            "position": [
+              -1984,
+              1040
+            ],
+            "id": "19c52eec-1558-4292-b269-1a725d462f1e",
+            "name": "Webhook",
+            "webhookId": "d0ab68d7-6529-4abe-acd6-90b61b982039",
+            "credentials": {
+              "jwtAuth": {
+                "id": "ANJkzhTnyvKyEJC3",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -16,
+              656
+            ],
+            "id": "eeb4ea76-fe3a-40b8-b6fd-ffcd8b7ec661",
+            "name": "Complete Register Mail Sent Tag Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"email_template\": \"follow_up_email\",\n  \"user_id\": \"{{ $json.zm_id\n }}\",\n  \"title\": \"test\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -352,
+              640
+            ],
+            "id": "ec968204-96e8-4b09-8595-c3218adcb37a",
+            "name": "Complete Register Mail Template Send Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                    "leftValue": "={{ $json.is_target_audience }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              -336,
+              208
+            ],
+            "id": "77a03d95-ce29-4848-90e9-8e633ef0a5fb",
+            "name": "If user target audience"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\" : \"{{ $('Get User Details after 30m').item.json.zm_id }}\",\n  \"template_name\": \"registration_followup_target_audience\"\n} ",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              0,
+              0
+            ],
+            "id": "890afb44-c074-41e6-a7e1-0bc2245d4ec2",
+            "name": "Send whatsapp followup for the user",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "amount": 2,
+              "unit": "minutes"
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+              -1184,
+              528
+            ],
+            "id": "a74ec33b-f5b4-4d3d-b16e-f69322576ca9",
+            "name": "Wait for 30m",
+            "webhookId": "9ed6df2b-4769-4638-9dad-3037e4ecb868"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register WhatsApp Sent\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              320,
+              0
+            ],
+            "id": "64f29547-bb34-4e90-a188-96efb7c37630",
+            "name": "Complete Register WhatsApp Sent Tag Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "url": "https://staging.secondsutra.com/django/api/n8n/get_user_details/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              512,
+              656
+            ],
+            "id": "58c5bda5-1cc9-47cd-970a-298b22461e6f",
+            "name": "Get User Details after 24 hours",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "url": "https://staging.secondsutra.com/django/api/n8n/get_user_details/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -880,
+              432
+            ],
+            "id": "15249f54-56fd-480d-ba2a-bfa307539912",
+            "name": "Get User Details after 30m",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              768,
+              656
+            ],
+            "id": "ddbcfa77-69b2-4781-abae-771ac10c0815",
+            "name": "User Step If it is none after 24 hours"
+          },
+          {
+            "parameters": {
+              "amount": 24,
+              "unit": "hours"
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+              272,
+              656
+            ],
+            "id": "b478b9ca-577c-4c2c-abb3-6b4deda44214",
+            "name": "Wait 24 hours",
+            "webhookId": "70094f88-3112-4582-96d5-c2188bf9dbe2",
+            "disabled": true
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Call this lead\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              1504,
+              880
+            ],
+            "id": "aa929613-52be-4904-adb5-0a4fa76dabea",
+            "name": "Call this lead Tag Added",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                    "leftValue": "={{ $json.is_target_audience }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  },
+                  {
+                    "id": "bf6242b0-2150-4a9f-9ed1-82f96201a82b",
+                    "leftValue": "={{ $json.matrimony_profile.marital_status }}",
+                    "rightValue": "Never married",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              1168,
+              896
+            ],
+            "id": "1e5a3a77-37f2-40f6-a00f-94ef228df0d9",
+            "name": "If user target audience and not a never married"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              -608,
+              416
+            ],
+            "id": "f0ee5e56-7610-48a1-b310-226d59f8b5dc",
+            "name": "User Step If check is empty"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/create_crm_comment_for_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"comment_text\": \"#robot #incomplete_registration Call & follow-up required.\",\n  \"is_todo\":true,\n  \"priority\":\"low\",\n  \"type\": \"incomplete_registration\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              1760,
+              880
+            ],
+            "id": "54fd89df-d5cc-4ba0-bda6-6aa7555955e4",
+            "name": "Create comment to follow up for CRM",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/remove_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\", \"Complete Register WhatsApp Sent\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              1136,
+              320
+            ],
+            "id": "382ba312-6e20-41c0-97b6-b12ebe10c88e",
+            "name": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "url": "https://staging.secondsutra.com/django/api/n8n/get_user_details/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"user_id\": \"{{ $json.body.payload.sender_id }}\"}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -736,
+              1088
+            ],
+            "id": "72ad4df1-8b92-4817-93ff-738db72df7eb",
+            "name": "Get User Details",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "rules": {
+                "values": [
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "new_user_registered_follow_up",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals"
+                          },
+                          "id": "890401b4-1b02-42ff-b04e-58b4e50925ab"
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  },
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "id": "8c465457-1350-4ea0-bcc2-50d4f7635aed",
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "accepted_virtual_meet",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals",
+                            "name": "filter.operator.equals"
+                          }
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  },
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "id": "fd75b266-bc3b-49fb-abf2-2d6bf6a7243e",
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "event_to_calender",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals",
+                            "name": "filter.operator.equals"
+                          }
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  },
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "id": "f5355054-25b5-4444-8fc1-7b0322033694",
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "post_vm_feedback_followup",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals",
+                            "name": "filter.operator.equals"
+                          }
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  }
+                ]
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.switch",
+            "typeVersion": 3.4,
+            "position": [
+              -1632,
+              928
+            ],
+            "id": "417d3003-7c81-497a-a876-d83907d947b7",
+            "name": "Event Cases"
+          },
+          {
+            "parameters": {
+              "content": "**Once Virtual Meet Accepted**",
+              "height": 80,
+              "width": 150
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+              -1312,
+              1008
+            ],
+            "typeVersion": 1,
+            "id": "bff47342-e33e-43c9-88c6-10301c76f879",
+            "name": "Sticky Note"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"email_template\": \"vm_accepted_user_follow_up_email\",\n  \"send_push_notification\": true,\n    \"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n  \"title\": \"🎉 It’s a Yes! {{ $json.name }} is ready to meet\",\n  \"cta_text\": \"Schedule Virtual Meet\",\n  \"message\":\"{{ $json.name }} has accepted your virtual meet request. Share your availability to schedule the call.\",\n  \"redirect_url\":\"view-profile/{{ $json.zm_id }}\",\n  \"notification_type\":\"n8n_accepted_vm_push\",\n  \"other_user_id\":\"{{ $('Webhook').item.json.body.payload.sender_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -464,
+              1200
+            ],
+            "id": "523fde06-ac55-4921-820d-9910a15d73e3",
+            "name": "Email & Push Followup Notification",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n\"template_name\":\"virtual_meet_request_accepted\",\n\"other_user_id\" : \"{{ $('Send Immediately').item.json.body.payload.sender_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -480,
+              944
+            ],
+            "id": "4fc5cda6-e621-48e6-b960-eae264393e99",
+            "name": "WhatsApp Followup Notification",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "amount": 1
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+              -944,
+              1088
+            ],
+            "id": "92d771d5-51f4-4402-9461-f3294e0bb44e",
+            "name": "Send Immediately",
+            "webhookId": "2a45f7c4-0d46-4522-b74b-2a5f0fb735d8"
+          },
+          {
+            "parameters": {
+              "calendar": {
+                "__rl": true,
+                "value": "c_7f6a2a89cf360f0a8e13cf52746ee9a170a041587a4716685744098b30baeda8@group.calendar.google.com",
+                "mode": "list",
+                "cachedResultName": "Virtual Meet F2F"
+              },
+              "start": "={{ new Date($json.body.payload.event_timing) }}",
+              "end": "={{ new Date(new Date($json.body.payload.event_timing).getTime() + 60 * 60 * 1000).toISOString() }}",
+              "useDefaultReminders": false,
+              "additionalFields": {
+                "attendees": [
+                  "deepak@zentratech.com"
+                ],
+                "location": "={{ $json.body.payload.meet_link }}",
+                "sendUpdates": "all",
+                "summary": "={{ $json.body.payload.title }}"
+              },
+              "remindersUi": {
+                "remindersValues": [
+                  {
+                    "method": "email",
+                    "minutes": 10
+                  }
+                ]
+              }
+            },
+            "type": "n8n-nodes-base.googleCalendar",
+            "typeVersion": 1.3,
+            "position": [
+              -880,
+              1440
+            ],
+            "id": "5279d686-d8c7-47fa-806e-e61c09f38bb0",
+            "name": "Create an event",
+            "credentials": {
+              "googleCalendarOAuth2Api": {
+                "id": "5hk2Cb5Rv7InK3EU",
+                "name": "Google Calendar account Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"email_template\": \"vm_post_successfull_follow_up_email\",\n  \"send_push_notification\": true,\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_1_id }}\",\n  \"virtual_meet_id\": {{ $('Webhook').item.json.body.payload.virtual_meet_id }},\n  \"title\": \"Hope your virtual meet went well 🎉\",\n  \"cta_text\": \"Rate & Help Others\",\n  \"message\":\"Take a moment to share your experience and help others on their journey.\",\n   \"redirect_url\":\"meet_link_schedule/{{ $json.body.payload.virtual_meet_id }}\",\n  \"notification_type\":\"n8n_post_vm_feedback_push\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -1232,
+              2208
+            ],
+            "id": "9eda7b05-c7ba-4191-b1d7-ed53fe37af0c",
+            "name": "Post VM Feedback Followup Email and push notification(User 1)",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_email_push_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"email_template\": \"vm_post_successfull_follow_up_email\",\n  \"send_push_notification\": true,\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_2_id }}\",\n  \"virtual_meet_id\": {{ $('Webhook').item.json.body.payload.virtual_meet_id }},\n  \"title\": \"Hope your virtual meet went well 🎉\",\n  \"cta_text\": \"Rate & Help Others\",\n  \"message\":\"Take a moment to share your experience and help others on their journey.\",\n  \"redirect_url\":\"meet_link_schedule/{{ $json.body.payload.virtual_meet_id }}\",\n  \"notification_type\":\"n8n_post_vm_feedback_push\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -1168,
+              1920
+            ],
+            "id": "24e96f73-c002-41da-8535-e357f965d3a5",
+            "name": "Post VM Feedback Followup Email and Push Notification(User 2)",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"user_id\": \"{{ $('Webhook').item.json.body.payload.user_2_id }}\",\n\"template_name\":\"virtual_meet_post_scheduled\",\n\"virtual_meet_id\": \"{{ $('Webhook').item.json.body.payload.virtual_meet_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -784,
+              1920
+            ],
+            "id": "78da3783-3990-47b3-90ab-07f52a781d7b",
+            "name": "Post VM Feedback Whatsapp Followup(User 2)",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://staging.secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"user_id\": \"{{ $('Webhook').item.json.body.payload.user_1_id }}\",\n\"template_name\":\"virtual_meet_post_scheduled\",\n\"virtual_meet_id\": \"{{ $('Webhook').item.json.body.payload.virtual_meet_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -816,
+              2208
+            ],
+            "id": "a8077b4d-695f-4cda-8cb3-64c2bb9608a7",
+            "name": "Post VM Feedback Whatsapp Followup(User 1)",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "wSqShOmc8HNxjkk9",
+                "name": "Staging"
+              }
+            }
+          }
+        ],
+        "connections": {
+          "Webhook": {
+            "main": [
+              [
+                {
+                  "node": "Event Cases",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Complete Register Mail Sent Tag Request": {
+            "main": [
+              [
+                {
+                  "node": "Wait 24 hours",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Complete Register Mail Template Send Request": {
+            "main": [
+              [
+                {
+                  "node": "Complete Register Mail Sent Tag Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "If user target audience": {
+            "main": [
+              [
+                {
+                  "node": "Send whatsapp followup for the user",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Send whatsapp followup for the user": {
+            "main": [
+              [
+                {
+                  "node": "Complete Register WhatsApp Sent Tag Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Wait for 30m": {
+            "main": [
+              [
+                {
+                  "node": "Get User Details after 30m",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Get User Details after 30m": {
+            "main": [
+              [
+                {
+                  "node": "User Step If check is empty",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Get User Details after 24 hours": {
+            "main": [
+              [
+                {
+                  "node": "User Step If it is none after 24 hours",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "User Step If it is none after 24 hours": {
+            "main": [
+              [
+                {
+                  "node": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "If user target audience and not a never married",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Wait 24 hours": {
+            "main": [
+              [
+                {
+                  "node": "Get User Details after 24 hours",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "If user target audience and not a never married": {
+            "main": [
+              [
+                {
+                  "node": "Call this lead Tag Added",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Call this lead Tag Added": {
+            "main": [
+              [
+                {
+                  "node": "Create comment to follow up for CRM",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "User Step If check is empty": {
+            "main": [
+              [],
+              [
+                {
+                  "node": "If user target audience",
+                  "type": "main",
+                  "index": 0
+                },
+                {
+                  "node": "Complete Register Mail Template Send Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Get User Details": {
+            "main": [
+              [
+                {
+                  "node": "WhatsApp Followup Notification",
+                  "type": "main",
+                  "index": 0
+                },
+                {
+                  "node": "Email & Push Followup Notification",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Event Cases": {
+            "main": [
+              [
+                {
+                  "node": "Wait for 30m",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Send Immediately",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Create an event",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Post VM Feedback Followup Email and push notification(User 1)",
+                  "type": "main",
+                  "index": 0
+                },
+                {
+                  "node": "Post VM Feedback Followup Email and Push Notification(User 2)",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Send Immediately": {
+            "main": [
+              [
+                {
+                  "node": "Get User Details",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Create an event": {
+            "main": [
+              []
+            ]
+          },
+          "Post VM Feedback Followup Email and Push Notification(User 2)": {
+            "main": [
+              [
+                {
+                  "node": "Post VM Feedback Whatsapp Followup(User 2)",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Post VM Feedback Followup Email and push notification(User 1)": {
+            "main": [
+              [
+                {
+                  "node": "Post VM Feedback Whatsapp Followup(User 1)",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "authors": "Secondsutra Matrimony",
+        "name": "Version 35706c3e",
+        "description": "",
+        "autosaved": true
+      },
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-01-27T12:01:21.424Z",
+      "createdAt": "2026-01-23T12:26:19.729Z",
+      "id": "jlOlUytx6SjZ-WslveHeK",
+      "name": "[Production] Error Trigger",
+      "active": true,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {},
+          "type": "n8n-nodes-base.errorTrigger",
+          "typeVersion": 1,
+          "position": [
+            -320,
+            32
+          ],
+          "id": "f138900e-c49b-4899-ae10-d5cc174b88a0",
+          "name": "Error Trigger"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_debug_email/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name: {{$json.workflow.name}} , Workflow Err: {{ $json.execution.error.message }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -112,
+            32
+          ],
+          "id": "1ddbefc6-fb9e-4441-8e26-1bc2fee72378",
+          "name": "HTTP Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Error Trigger": {
+          "main": [
+            [
+              {
+                "node": "HTTP Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": false
+      },
+      "staticData": null,
+      "meta": null,
+      "pinData": {},
+      "versionId": "35c62459-88ca-4594-9685-b2ef51aa6389",
+      "activeVersionId": "35c62459-88ca-4594-9685-b2ef51aa6389",
+      "triggerCount": 0,
+      "shared": [
+        {
+          "updatedAt": "2026-01-23T12:26:19.733Z",
+          "createdAt": "2026-01-23T12:26:19.733Z",
+          "role": "workflow:owner",
+          "workflowId": "jlOlUytx6SjZ-WslveHeK",
+          "projectId": "dNAUCjIYq35LX4Np"
+        }
+      ],
+      "activeVersion": {
+        "updatedAt": "2026-01-27T12:01:25.000Z",
+        "createdAt": "2026-01-27T12:01:21.428Z",
+        "versionId": "35c62459-88ca-4594-9685-b2ef51aa6389",
+        "workflowId": "jlOlUytx6SjZ-WslveHeK",
+        "nodes": [
+          {
+            "parameters": {},
+            "type": "n8n-nodes-base.errorTrigger",
+            "typeVersion": 1,
+            "position": [
+              -320,
+              32
+            ],
+            "id": "f138900e-c49b-4899-ae10-d5cc174b88a0",
+            "name": "Error Trigger"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/send_debug_email/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"subject\":\"[Error] N8N Workflow\",\n  \"text\": \"Workflow Name: {{$json.workflow.name}} , Workflow Err: {{ $json.execution.error.message }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -112,
+              32
+            ],
+            "id": "1ddbefc6-fb9e-4441-8e26-1bc2fee72378",
+            "name": "HTTP Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          }
+        ],
+        "connections": {
+          "Error Trigger": {
+            "main": [
+              [
+                {
+                  "node": "HTTP Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "authors": "Secondsutra Matrimony",
+        "name": "Version 35c62459",
+        "description": "",
+        "autosaved": true
+      },
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-01-30T07:46:11.790Z",
+      "createdAt": "2026-01-23T12:23:52.447Z",
+      "id": "qugOSn8IxkosoldhSMd5G",
+      "name": "[Production] SecondSutra - Followup Automations",
+      "active": true,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "path": "n8n",
+            "authentication": "jwtAuth",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            -2320,
+            704
+          ],
+          "id": "106575bc-90a3-4ff7-ac1c-f101264e0c83",
+          "name": "Webhook",
+          "webhookId": "d0ab68d7-6529-4abe-acd6-90b61b982039",
+          "credentials": {
+            "jwtAuth": {
+              "id": "7HiZWHy8Dus9Q3H9",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -16,
+            656
+          ],
+          "id": "0df4e0c4-7cd6-48d2-898a-8db77d364c6c",
+          "name": "Complete Register Mail Sent Tag Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"email_template\": \"follow_up_email\",\n  \"user_id\": \"{{ $json.zm_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -352,
+            656
+          ],
+          "id": "d38a80f5-0565-4f88-b7da-df17f7509667",
+          "name": "Complete Register Mail Template Send Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                  "leftValue": "={{ $json.is_target_audience }}",
+                  "rightValue": true,
+                  "operator": {
+                    "type": "boolean",
+                    "operation": "equals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            -336,
+            208
+          ],
+          "id": "645f89df-8833-46aa-82bb-f2b709a19949",
+          "name": "If user target audience"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\" : \"{{ $('Get User Details after 30m').item.json.zm_id }}\",\n  \"template_name\": \"registration_followup_target_audience\"\n} ",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            0,
+            0
+          ],
+          "id": "026e29fb-3557-4538-939e-019e18ad944b",
+          "name": "Send whatsapp followup for the user",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "amount": 30,
+            "unit": "minutes"
+          },
+          "type": "n8n-nodes-base.wait",
+          "typeVersion": 1.1,
+          "position": [
+            -1184,
+            528
+          ],
+          "id": "2e9e1709-1cdc-4a3c-854a-cee320e3844d",
+          "name": "Wait for 30m",
+          "webhookId": "9ed6df2b-4769-4638-9dad-3037e4ecb868"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register WhatsApp Sent\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            320,
+            0
+          ],
+          "id": "f7be1fa9-7e6c-4a94-abdf-d9fa872dd1e2",
+          "name": "Complete Register WhatsApp Sent Tag Request",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://secondsutra.com/django/api/n8n/get_user_details/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            512,
+            656
+          ],
+          "id": "d0ef29f8-7532-4fd2-8789-85b862133a4b",
+          "name": "Get User Details after 24 hours",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://secondsutra.com/django/api/n8n/get_user_details/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -880,
+            432
+          ],
+          "id": "8610ce56-5e14-46c9-ad87-dcc32a64dd28",
+          "name": "Get User Details after 30m",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                  "leftValue": "={{ $json.step }}",
+                  "rightValue": "",
+                  "operator": {
+                    "type": "string",
+                    "operation": "empty",
+                    "singleValue": true
+                  }
+                },
+                {
+                  "id": "075d4cd6-a69d-462b-897c-3f0a7d410dc4",
+                  "leftValue": "",
+                  "rightValue": "",
+                  "operator": {
+                    "type": "string",
+                    "operation": "equals",
+                    "name": "filter.operator.equals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            768,
+            656
+          ],
+          "id": "7466c857-68be-4f26-943f-9d0be72e4c59",
+          "name": "User Step If it is none after 24 hours"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/remove_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\", \"Complete Register WhatsApp Sent\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            1136,
+            320
+          ],
+          "id": "861c2e58-c35b-48c4-9d31-9bb5fecddfe4",
+          "name": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "amount": 24,
+            "unit": "hours"
+          },
+          "type": "n8n-nodes-base.wait",
+          "typeVersion": 1.1,
+          "position": [
+            272,
+            656
+          ],
+          "id": "69c95cad-221d-4e5a-82b2-935169a67d38",
+          "name": "Wait 24 hours",
+          "webhookId": "70094f88-3112-4582-96d5-c2188bf9dbe2"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Call this lead\"]\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            1920,
+            880
+          ],
+          "id": "a3caf633-c1b3-4c86-8592-beb0849c8130",
+          "name": "Call this lead Tag Added",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                  "leftValue": "={{ $json.is_target_audience }}",
+                  "rightValue": true,
+                  "operator": {
+                    "type": "boolean",
+                    "operation": "equals"
+                  }
+                },
+                {
+                  "id": "bf6242b0-2150-4a9f-9ed1-82f96201a82b",
+                  "leftValue": "={{ $json.matrimony_profile.marital_status }}",
+                  "rightValue": "Never married",
+                  "operator": {
+                    "type": "string",
+                    "operation": "notEquals"
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            1584,
+            896
+          ],
+          "id": "98bc94cf-cfcb-463d-9594-c87021b8df68",
+          "name": "If user target audience and not a never married"
+        },
+        {
+          "parameters": {
+            "conditions": {
+              "options": {
+                "caseSensitive": true,
+                "leftValue": "",
+                "typeValidation": "strict",
+                "version": 3
+              },
+              "conditions": [
+                {
+                  "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                  "leftValue": "={{ $json.step }}",
+                  "rightValue": "",
+                  "operator": {
+                    "type": "string",
+                    "operation": "empty",
+                    "singleValue": true
+                  }
+                }
+              ],
+              "combinator": "and"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.if",
+          "typeVersion": 2.3,
+          "position": [
+            -608,
+            416
+          ],
+          "id": "73f9e3e4-b5b3-456b-b222-96ecc3349e19",
+          "name": "User Step If check is empty"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/create_crm_comment_for_user/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"comment_text\": \"#robot #incomplete_registration Call & follow-up required.\",\n  \"is_todo\":true,\n  \"priority\":\"low\",\n  \"type\": \"incomplete_registration\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            2176,
+            880
+          ],
+          "id": "252e0102-8c63-4ef5-a964-1c0f20e3a525",
+          "name": "Create comment to follow up for CRM",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://secondsutra.com/django/api/n8n/get_user_details/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $json.body.payload.sender_id }}\"}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -848,
+            1072
+          ],
+          "id": "c296f1df-8d10-43ed-bdae-b1dae1ba6ec5",
+          "name": "Get User Details",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "rules": {
+              "values": [
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "new_user_registered_follow_up",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals"
+                        },
+                        "id": "890401b4-1b02-42ff-b04e-58b4e50925ab"
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "8c465457-1350-4ea0-bcc2-50d4f7635aed",
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "accepted_virtual_meet",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "f43d8213-bb3f-4c08-a20a-c86c00fb633f",
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "event_to_calender",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                },
+                {
+                  "conditions": {
+                    "options": {
+                      "caseSensitive": true,
+                      "leftValue": "",
+                      "typeValidation": "strict",
+                      "version": 3
+                    },
+                    "conditions": [
+                      {
+                        "id": "ba60962c-69fd-48e9-8518-2f5665db04f4",
+                        "leftValue": "={{ $json.body.event_name }}",
+                        "rightValue": "post_vm_feedback_followup",
+                        "operator": {
+                          "type": "string",
+                          "operation": "equals",
+                          "name": "filter.operator.equals"
+                        }
+                      }
+                    ],
+                    "combinator": "and"
+                  }
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.switch",
+          "typeVersion": 3.4,
+          "position": [
+            -2064,
+            704
+          ],
+          "id": "505f1d8c-7088-47f9-805b-b88331c298fa",
+          "name": "Event Cases"
+        },
+        {
+          "parameters": {
+            "content": "**Incompleted registrations followup**",
+            "height": 80,
+            "width": 150
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "position": [
+            -1424,
+            528
+          ],
+          "typeVersion": 1,
+          "id": "de820828-a401-412e-bc72-7cd177015713",
+          "name": "Sticky Note1"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"email_template\": \"vm_accepted_user_follow_up_email\",\n  \"send_push_notification\": true,\n    \"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n  \"title\": \"🎉 It’s a Yes! {{ $json.name }} is ready to meet\",\n  \"cta_text\": \"Schedule Virtual Meet\",\n  \"message\":\"{{ $json.name }} has accepted your virtual meet request. Share your availability to schedule the call.\",\n  \"redirect_url\":\"view-profile/{{ $json.zm_id }}\",\n  \"notification_type\":\"n8n_accepted_vm_push\",\n  \"other_user_id\":\"{{ $('Webhook').item.json.body.payload.sender_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -576,
+            1184
+          ],
+          "id": "15fbbe07-9360-4c50-9254-02ac4bdcc844",
+          "name": "Email & Push Followup Notification",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n\"template_name\":\"virtual_meet_request_accepted\",\n\"other_user_id\" : \"{{ $('Send Immediately').item.json.body.payload.sender_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -592,
+            928
+          ],
+          "id": "85017d7e-a009-4cfb-b707-200d24fbcc59",
+          "name": "WhatsApp Followup Notification",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "amount": 1
+          },
+          "type": "n8n-nodes-base.wait",
+          "typeVersion": 1.1,
+          "position": [
+            -1056,
+            1072
+          ],
+          "id": "0d8faf9d-e65f-4329-b88c-4426042e654a",
+          "name": "Send Immediately",
+          "webhookId": "2a45f7c4-0d46-4522-b74b-2a5f0fb735d8"
+        },
+        {
+          "parameters": {
+            "calendar": {
+              "__rl": true,
+              "value": "c_8c59a47cfc66a162461731fbed8095f03aa3ce3dc55f91e3f2498ef093bc5da4@group.calendar.google.com",
+              "mode": "list",
+              "cachedResultName": "Virtual Meet"
+            },
+            "start": "={{ new Date($json.body.payload.event_timing) }}",
+            "end": "={{ new Date(new Date($json.body.payload.event_timing).getTime() + 60 * 60 * 1000).toISOString() }}",
+            "useDefaultReminders": false,
+            "additionalFields": {
+              "attendees": [
+                "revathy@zentratech.com",
+                "saravana@zentratech.com"
+              ],
+              "location": "={{ $json.body.payload.meet_link }}",
+              "sendUpdates": "all",
+              "summary": "={{ $json.body.payload.title }}"
+            },
+            "remindersUi": {
+              "remindersValues": [
+                {
+                  "method": "email",
+                  "minutes": 10
+                }
+              ]
+            }
+          },
+          "type": "n8n-nodes-base.googleCalendar",
+          "typeVersion": 1.3,
+          "position": [
+            -1392,
+            1376
+          ],
+          "id": "202b4203-336a-438e-8574-d31f7ba708e4",
+          "name": "Create an event",
+          "credentials": {
+            "googleCalendarOAuth2Api": {
+              "id": "i8J2ZIpU0UWFiZEv",
+              "name": "Google Calendar account 2"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "content": "**Once Virtual Meet Accepted**",
+            "height": 80,
+            "width": 150
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "position": [
+            -1312,
+            816
+          ],
+          "typeVersion": 1,
+          "id": "d4bebdea-6d34-4623-bc31-3c411d6e5db7",
+          "name": "Sticky Note"
+        },
+        {
+          "parameters": {
+            "content": "Once User Scheduled. Add the event to calender",
+            "height": 80,
+            "width": 198
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "position": [
+            -1632,
+            1040
+          ],
+          "typeVersion": 1,
+          "id": "ad1a5f2a-d5ac-4554-8385-aa1653e0b7cc",
+          "name": "Sticky Note2"
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"email_template\": \"vm_post_successfull_follow_up_email\",\n  \"send_push_notification\": true,\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_1_id }}\",\n  \"virtual_meet_id\": {{ $('Webhook').item.json.body.payload.virtual_meet_id }},\n  \"title\": \"Hope your virtual meet went well 🎉\",\n  \"cta_text\": \"Rate & Help Others\",\n  \"message\":\"Take a moment to share your experience and help others on their journey.\",\n   \"redirect_url\":\"meet_link_schedule/{{ $json.body.payload.virtual_meet_id }}\",\n  \"notification_type\":\"n8n_post_vm_feedback_push\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1616,
+            2320
+          ],
+          "id": "aec6cc60-a0e5-429a-ad2b-d35bb856265d",
+          "name": "Post VM Feedback Followup Email and push notification(User 1)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\n  \"email_template\": \"vm_post_successfull_follow_up_email\",\n  \"send_push_notification\": true,\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_2_id }}\",\n  \"virtual_meet_id\": {{ $('Webhook').item.json.body.payload.virtual_meet_id }},\n  \"title\": \"Hope your virtual meet went well 🎉\",\n  \"cta_text\": \"Rate & Help Others\",\n  \"message\":\"Take a moment to share your experience and help others on their journey.\",\n  \"redirect_url\":\"meet_link_schedule/{{ $json.body.payload.virtual_meet_id }}\",\n  \"notification_type\":\"n8n_post_vm_feedback_push\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1552,
+            2032
+          ],
+          "id": "fd7953aa-7b24-401d-abdb-14e3cfde704e",
+          "name": "Post VM Feedback Followup Email and Push Notification(User 2)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $('Webhook').item.json.body.payload.user_2_id }}\",\n\"template_name\":\"virtual_meet_post_scheduled\",\n\"virtual_meet_id\": \"{{ $('Webhook').item.json.body.payload.virtual_meet_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1168,
+            2032
+          ],
+          "id": "2cc9d86c-4dff-41c0-9ca8-451e78fcaa08",
+          "name": "Post VM Feedback Whatsapp Followup(User 2)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "={\"user_id\": \"{{ $('Webhook').item.json.body.payload.user_1_id }}\",\n\"template_name\":\"virtual_meet_post_scheduled\",\n\"virtual_meet_id\": \"{{ $('Webhook').item.json.body.payload.virtual_meet_id }}\"\n}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            -1200,
+            2320
+          ],
+          "id": "7faa57d6-167d-45e1-952d-07d3c2df5d21",
+          "name": "Post VM Feedback Whatsapp Followup(User 1)",
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "content": "Once User Successfully had the meet. Triggering this event.",
+            "height": 80,
+            "width": 198
+          },
+          "type": "n8n-nodes-base.stickyNote",
+          "position": [
+            -1632,
+            1760
+          ],
+          "typeVersion": 1,
+          "id": "0cf7d690-e80e-4195-b312-681b3b4b8bf3",
+          "name": "Sticky Note3"
+        }
+      ],
+      "connections": {
+        "Webhook": {
+          "main": [
+            [
+              {
+                "node": "Event Cases",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Complete Register Mail Sent Tag Request": {
+          "main": [
+            [
+              {
+                "node": "Wait 24 hours",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Complete Register Mail Template Send Request": {
+          "main": [
+            [
+              {
+                "node": "Complete Register Mail Sent Tag Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If user target audience": {
+          "main": [
+            [
+              {
+                "node": "Send whatsapp followup for the user",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send whatsapp followup for the user": {
+          "main": [
+            [
+              {
+                "node": "Complete Register WhatsApp Sent Tag Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Wait for 30m": {
+          "main": [
+            [
+              {
+                "node": "Get User Details after 30m",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get User Details after 24 hours": {
+          "main": [
+            [
+              {
+                "node": "User Step If it is none after 24 hours",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get User Details after 30m": {
+          "main": [
+            [
+              {
+                "node": "User Step If check is empty",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "User Step If it is none after 24 hours": {
+          "main": [
+            [
+              {
+                "node": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "If user target audience and not a never married",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Wait 24 hours": {
+          "main": [
+            [
+              {
+                "node": "Get User Details after 24 hours",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Call this lead Tag Added": {
+          "main": [
+            [
+              {
+                "node": "Create comment to follow up for CRM",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "If user target audience and not a never married": {
+          "main": [
+            [
+              {
+                "node": "Call this lead Tag Added",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "User Step If check is empty": {
+          "main": [
+            [],
+            [
+              {
+                "node": "If user target audience",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Complete Register Mail Template Send Request",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Create comment to follow up for CRM": {
+          "main": [
+            []
+          ]
+        },
+        "Get User Details": {
+          "main": [
+            [
+              {
+                "node": "WhatsApp Followup Notification",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Email & Push Followup Notification",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Event Cases": {
+          "main": [
+            [
+              {
+                "node": "Wait for 30m",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Send Immediately",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Create an event",
+                "type": "main",
+                "index": 0
+              }
+            ],
+            [
+              {
+                "node": "Post VM Feedback Followup Email and Push Notification(User 2)",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Post VM Feedback Followup Email and push notification(User 1)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "WhatsApp Followup Notification": {
+          "main": [
+            []
+          ]
+        },
+        "Send Immediately": {
+          "main": [
+            [
+              {
+                "node": "Get User Details",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Post VM Feedback Followup Email and push notification(User 1)": {
+          "main": [
+            [
+              {
+                "node": "Post VM Feedback Whatsapp Followup(User 1)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Post VM Feedback Followup Email and Push Notification(User 2)": {
+          "main": [
+            [
+              {
+                "node": "Post VM Feedback Whatsapp Followup(User 2)",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": false,
+        "timeSavedMode": "fixed",
+        "callerPolicy": "workflowsFromSameOwner",
+        "errorWorkflow": "jlOlUytx6SjZ-WslveHeK"
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "4bdaa618-7cdb-4284-86f4-4e8e6276c70f",
+      "activeVersionId": "79cbedea-661b-45c6-bafb-e19b7767d992",
+      "triggerCount": 1,
+      "shared": [
+        {
+          "updatedAt": "2026-01-23T12:23:52.452Z",
+          "createdAt": "2026-01-23T12:23:52.452Z",
+          "role": "workflow:owner",
+          "workflowId": "qugOSn8IxkosoldhSMd5G",
+          "projectId": "dNAUCjIYq35LX4Np"
+        }
+      ],
+      "activeVersion": {
+        "updatedAt": "2026-01-29T09:20:22.000Z",
+        "createdAt": "2026-01-29T07:22:33.927Z",
+        "versionId": "79cbedea-661b-45c6-bafb-e19b7767d992",
+        "workflowId": "qugOSn8IxkosoldhSMd5G",
+        "nodes": [
+          {
+            "parameters": {
+              "path": "n8n",
+              "authentication": "jwtAuth",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.webhook",
+            "typeVersion": 2.1,
+            "position": [
+              -2320,
+              704
+            ],
+            "id": "106575bc-90a3-4ff7-ac1c-f101264e0c83",
+            "name": "Webhook",
+            "webhookId": "d0ab68d7-6529-4abe-acd6-90b61b982039",
+            "credentials": {
+              "jwtAuth": {
+                "id": "7HiZWHy8Dus9Q3H9",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -16,
+              656
+            ],
+            "id": "0df4e0c4-7cd6-48d2-898a-8db77d364c6c",
+            "name": "Complete Register Mail Sent Tag Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"email_template\": \"follow_up_email\",\n  \"user_id\": \"{{ $json.zm_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -352,
+              656
+            ],
+            "id": "d38a80f5-0565-4f88-b7da-df17f7509667",
+            "name": "Complete Register Mail Template Send Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                    "leftValue": "={{ $json.is_target_audience }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              -336,
+              208
+            ],
+            "id": "645f89df-8833-46aa-82bb-f2b709a19949",
+            "name": "If user target audience"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\" : \"{{ $('Get User Details after 30m').item.json.zm_id }}\",\n  \"template_name\": \"registration_followup_target_audience\"\n} ",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              0,
+              0
+            ],
+            "id": "026e29fb-3557-4538-939e-019e18ad944b",
+            "name": "Send whatsapp followup for the user",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "amount": 30,
+              "unit": "minutes"
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+              -1184,
+              528
+            ],
+            "id": "2e9e1709-1cdc-4a3c-854a-cee320e3844d",
+            "name": "Wait for 30m",
+            "webhookId": "9ed6df2b-4769-4638-9dad-3037e4ecb868"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register WhatsApp Sent\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              320,
+              0
+            ],
+            "id": "f7be1fa9-7e6c-4a94-abdf-d9fa872dd1e2",
+            "name": "Complete Register WhatsApp Sent Tag Request",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "url": "https://secondsutra.com/django/api/n8n/get_user_details/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              512,
+              656
+            ],
+            "id": "d0ef29f8-7532-4fd2-8789-85b862133a4b",
+            "name": "Get User Details after 24 hours",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "url": "https://secondsutra.com/django/api/n8n/get_user_details/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('Webhook').item.json.body.payload.user_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -880,
+              432
+            ],
+            "id": "8610ce56-5e14-46c9-ad87-dcc32a64dd28",
+            "name": "Get User Details after 30m",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  },
+                  {
+                    "id": "075d4cd6-a69d-462b-897c-3f0a7d410dc4",
+                    "leftValue": "",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              768,
+              656
+            ],
+            "id": "7466c857-68be-4f26-943f-9d0be72e4c59",
+            "name": "User Step If it is none after 24 hours"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/remove_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Complete Register Mail Sent\", \"Complete Register WhatsApp Sent\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              1136,
+              320
+            ],
+            "id": "861c2e58-c35b-48c4-9d31-9bb5fecddfe4",
+            "name": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "amount": 24,
+              "unit": "hours"
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+              272,
+              656
+            ],
+            "id": "69c95cad-221d-4e5a-82b2-935169a67d38",
+            "name": "Wait 24 hours",
+            "webhookId": "70094f88-3112-4582-96d5-c2188bf9dbe2"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/add_crm_tag_to_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"crm_tag\":[\"Call this lead\"]\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              1920,
+              880
+            ],
+            "id": "a3caf633-c1b3-4c86-8592-beb0849c8130",
+            "name": "Call this lead Tag Added",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "885aa7ef-d692-4f00-ab6a-9ea3c52620f7",
+                    "leftValue": "={{ $json.is_target_audience }}",
+                    "rightValue": true,
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "equals"
+                    }
+                  },
+                  {
+                    "id": "bf6242b0-2150-4a9f-9ed1-82f96201a82b",
+                    "leftValue": "={{ $json.matrimony_profile.marital_status }}",
+                    "rightValue": "Never married",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEquals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              1584,
+              896
+            ],
+            "id": "98bc94cf-cfcb-463d-9594-c87021b8df68",
+            "name": "If user target audience and not a never married"
+          },
+          {
+            "parameters": {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cc960d72-9401-45aa-bab0-c727443b8c38",
+                    "leftValue": "={{ $json.step }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "empty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.if",
+            "typeVersion": 2.3,
+            "position": [
+              -608,
+              416
+            ],
+            "id": "73f9e3e4-b5b3-456b-b222-96ecc3349e19",
+            "name": "User Step If check is empty"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/create_crm_comment_for_user/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\n  \"user_id\": \"{{ $('User Step If check is empty').item.json.zm_id }}\",\n  \"comment_text\": \"#robot #incomplete_registration Call & follow-up required.\",\n  \"is_todo\":true,\n  \"priority\":\"low\",\n  \"type\": \"incomplete_registration\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              2176,
+              880
+            ],
+            "id": "252e0102-8c63-4ef5-a964-1c0f20e3a525",
+            "name": "Create comment to follow up for CRM",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "url": "https://secondsutra.com/django/api/n8n/get_user_details/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"user_id\": \"{{ $json.body.payload.sender_id }}\"}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -848,
+              1072
+            ],
+            "id": "c296f1df-8d10-43ed-bdae-b1dae1ba6ec5",
+            "name": "Get User Details",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "rules": {
+                "values": [
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "new_user_registered_follow_up",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals"
+                          },
+                          "id": "890401b4-1b02-42ff-b04e-58b4e50925ab"
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  },
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "id": "8c465457-1350-4ea0-bcc2-50d4f7635aed",
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "accepted_virtual_meet",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals",
+                            "name": "filter.operator.equals"
+                          }
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  },
+                  {
+                    "conditions": {
+                      "options": {
+                        "caseSensitive": true,
+                        "leftValue": "",
+                        "typeValidation": "strict",
+                        "version": 3
+                      },
+                      "conditions": [
+                        {
+                          "id": "f43d8213-bb3f-4c08-a20a-c86c00fb633f",
+                          "leftValue": "={{ $json.body.event_name }}",
+                          "rightValue": "event_to_calender",
+                          "operator": {
+                            "type": "string",
+                            "operation": "equals",
+                            "name": "filter.operator.equals"
+                          }
+                        }
+                      ],
+                      "combinator": "and"
+                    }
+                  }
+                ]
+              },
+              "options": {}
+            },
+            "type": "n8n-nodes-base.switch",
+            "typeVersion": 3.4,
+            "position": [
+              -2016,
+              672
+            ],
+            "id": "505f1d8c-7088-47f9-805b-b88331c298fa",
+            "name": "Event Cases"
+          },
+          {
+            "parameters": {
+              "content": "**Incompleted registrations followup**",
+              "height": 80,
+              "width": 150
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+              -1424,
+              528
+            ],
+            "typeVersion": 1,
+            "id": "de820828-a401-412e-bc72-7cd177015713",
+            "name": "Sticky Note1"
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"email_template\": \"vm_accepted_user_follow_up_email\",\n  \"send_push_notification\": true,\n    \"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n  \"title\": \"🎉 It’s a Yes! {{ $json.name }} is ready to meet\",\n  \"cta_text\": \"Schedule Virtual Meet\",\n  \"message\":\"{{ $json.name }} has accepted your virtual meet request. Share your availability to schedule the call.\",\n  \"redirect_url\":\"view-profile/{{ $json.zm_id }}\",\n  \"notification_type\":\"n8n_accepted_vm_push\",\n  \"other_user_id\":\"{{ $('Webhook').item.json.body.payload.sender_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -576,
+              1184
+            ],
+            "id": "15fbbe07-9360-4c50-9254-02ac4bdcc844",
+            "name": "Email & Push Followup Notification",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "method": "POST",
+              "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+              "authentication": "genericCredentialType",
+              "genericAuthType": "httpBearerAuth",
+              "sendBody": true,
+              "specifyBody": "json",
+              "jsonBody": "={\"user_id\": \"{{ $('Send Immediately').item.json.body.payload.receiver_id }}\",\n\"template_name\":\"virtual_meet_request_accepted\",\n\"other_user_id\" : \"{{ $('Send Immediately').item.json.body.payload.sender_id }}\"\n}",
+              "options": {}
+            },
+            "type": "n8n-nodes-base.httpRequest",
+            "typeVersion": 4.3,
+            "position": [
+              -592,
+              928
+            ],
+            "id": "85017d7e-a009-4cfb-b707-200d24fbcc59",
+            "name": "WhatsApp Followup Notification",
+            "credentials": {
+              "httpBearerAuth": {
+                "id": "W5rIXol9OgJjIWb5",
+                "name": "Production"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "amount": 1
+            },
+            "type": "n8n-nodes-base.wait",
+            "typeVersion": 1.1,
+            "position": [
+              -1056,
+              1072
+            ],
+            "id": "0d8faf9d-e65f-4329-b88c-4426042e654a",
+            "name": "Send Immediately",
+            "webhookId": "2a45f7c4-0d46-4522-b74b-2a5f0fb735d8"
+          },
+          {
+            "parameters": {
+              "calendar": {
+                "__rl": true,
+                "value": "c_8c59a47cfc66a162461731fbed8095f03aa3ce3dc55f91e3f2498ef093bc5da4@group.calendar.google.com",
+                "mode": "list",
+                "cachedResultName": "Virtual Meet"
+              },
+              "start": "={{ new Date($json.body.payload.event_timing) }}",
+              "end": "={{ new Date(new Date($json.body.payload.event_timing).getTime() + 60 * 60 * 1000).toISOString() }}",
+              "useDefaultReminders": false,
+              "additionalFields": {
+                "attendees": [
+                  "revathy@zentratech.com",
+                  "saravana@zentratech.com"
+                ],
+                "location": "={{ $json.body.payload.meet_link }}",
+                "sendUpdates": "all",
+                "summary": "={{ $json.body.payload.title }}"
+              },
+              "remindersUi": {
+                "remindersValues": [
+                  {
+                    "method": "email",
+                    "minutes": 10
+                  }
+                ]
+              }
+            },
+            "type": "n8n-nodes-base.googleCalendar",
+            "typeVersion": 1.3,
+            "position": [
+              -1392,
+              1376
+            ],
+            "id": "202b4203-336a-438e-8574-d31f7ba708e4",
+            "name": "Create an event",
+            "credentials": {
+              "googleCalendarOAuth2Api": {
+                "id": "i8J2ZIpU0UWFiZEv",
+                "name": "Google Calendar account 2"
+              }
+            }
+          },
+          {
+            "parameters": {
+              "content": "**Once Virtual Meet Accepted**",
+              "height": 80,
+              "width": 150
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+              -1312,
+              816
+            ],
+            "typeVersion": 1,
+            "id": "d4bebdea-6d34-4623-bc31-3c411d6e5db7",
+            "name": "Sticky Note"
+          },
+          {
+            "parameters": {
+              "content": "Once User Scheduled. Add the event to calender",
+              "height": 80,
+              "width": 198
+            },
+            "type": "n8n-nodes-base.stickyNote",
+            "position": [
+              -1632,
+              1040
+            ],
+            "typeVersion": 1,
+            "id": "ad1a5f2a-d5ac-4554-8385-aa1653e0b7cc",
+            "name": "Sticky Note2"
+          }
+        ],
+        "connections": {
+          "Webhook": {
+            "main": [
+              [
+                {
+                  "node": "Event Cases",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Complete Register Mail Sent Tag Request": {
+            "main": [
+              [
+                {
+                  "node": "Wait 24 hours",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Complete Register Mail Template Send Request": {
+            "main": [
+              [
+                {
+                  "node": "Complete Register Mail Sent Tag Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "If user target audience": {
+            "main": [
+              [
+                {
+                  "node": "Send whatsapp followup for the user",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Send whatsapp followup for the user": {
+            "main": [
+              [
+                {
+                  "node": "Complete Register WhatsApp Sent Tag Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Wait for 30m": {
+            "main": [
+              [
+                {
+                  "node": "Get User Details after 30m",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Get User Details after 24 hours": {
+            "main": [
+              [
+                {
+                  "node": "User Step If it is none after 24 hours",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Get User Details after 30m": {
+            "main": [
+              [
+                {
+                  "node": "User Step If check is empty",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "User Step If it is none after 24 hours": {
+            "main": [
+              [
+                {
+                  "node": "Complete Register Mail Sent Tag and Complete Register WhatsApp Sent removal",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "If user target audience and not a never married",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Wait 24 hours": {
+            "main": [
+              [
+                {
+                  "node": "Get User Details after 24 hours",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Call this lead Tag Added": {
+            "main": [
+              [
+                {
+                  "node": "Create comment to follow up for CRM",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "If user target audience and not a never married": {
+            "main": [
+              [
+                {
+                  "node": "Call this lead Tag Added",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "User Step If check is empty": {
+            "main": [
+              [],
+              [
+                {
+                  "node": "If user target audience",
+                  "type": "main",
+                  "index": 0
+                },
+                {
+                  "node": "Complete Register Mail Template Send Request",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Create comment to follow up for CRM": {
+            "main": [
+              []
+            ]
+          },
+          "Get User Details": {
+            "main": [
+              [
+                {
+                  "node": "WhatsApp Followup Notification",
+                  "type": "main",
+                  "index": 0
+                },
+                {
+                  "node": "Email & Push Followup Notification",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "Event Cases": {
+            "main": [
+              [
+                {
+                  "node": "Wait for 30m",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Send Immediately",
+                  "type": "main",
+                  "index": 0
+                }
+              ],
+              [
+                {
+                  "node": "Create an event",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          },
+          "WhatsApp Followup Notification": {
+            "main": [
+              []
+            ]
+          },
+          "Send Immediately": {
+            "main": [
+              [
+                {
+                  "node": "Get User Details",
+                  "type": "main",
+                  "index": 0
+                }
+              ]
+            ]
+          }
+        },
+        "authors": "Secondsutra Matrimony",
+        "name": "Version 79cbedea",
+        "description": "",
+        "autosaved": true
+      },
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-01-27T13:22:49.099Z",
+      "createdAt": "2026-01-27T13:21:59.611Z",
+      "id": "s658L9q1vkq1zma52Y4C5",
+      "name": "My workflow",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "path": "10d42c21-ae87-460c-bdaa-fc4c7adf512f",
+            "authentication": "jwtAuth",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.webhook",
+          "typeVersion": 2.1,
+          "position": [
+            0,
+            0
+          ],
+          "id": "92d7e8b6-2a4a-4942-b2cf-1a49e4673cf5",
+          "name": "Webhook",
+          "webhookId": "10d42c21-ae87-460c-bdaa-fc4c7adf512f",
+          "credentials": {
+            "jwtAuth": {
+              "id": "7HiZWHy8Dus9Q3H9",
+              "name": "Production"
+            }
+          }
+        }
+      ],
+      "connections": {},
+      "settings": {
+        "executionOrder": "v1",
+        "availableInMCP": false
+      },
+      "staticData": null,
+      "meta": {
+        "templateCredsSetupCompleted": true
+      },
+      "pinData": {},
+      "versionId": "be8face8-4b14-4b3b-8546-d808fefd3110",
+      "activeVersionId": null,
+      "triggerCount": 0,
+      "shared": [
+        {
+          "updatedAt": "2026-01-27T13:21:59.621Z",
+          "createdAt": "2026-01-27T13:21:59.621Z",
+          "role": "workflow:owner",
+          "workflowId": "s658L9q1vkq1zma52Y4C5",
+          "projectId": "dNAUCjIYq35LX4Np"
+        }
+      ],
+      "activeVersion": null,
+      "tags": []
+    },
+    {
+      "updatedAt": "2026-01-30T13:34:21.402Z",
+      "createdAt": "2026-01-30T12:14:25.761Z",
+      "id": "zGRBkX4xHMEQTB3Y",
+      "name": "venkat",
+      "active": false,
+      "isArchived": false,
+      "nodes": [
+        {
+          "parameters": {
+            "method": "POST",
+            "url": "https://secondsutra.com/django/api/n8n/send_whatsapp_notification/",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "specifyBody": "json",
+            "jsonBody": "{\"user_id\": \"SS1739108\", \"template_name\": \"registration_followup_target_audience\"}",
+            "options": {}
+          },
+          "id": "e78b6ac4-f6d3-4e44-8d2a-39c0a52d312c",
+          "name": "Send Test WhatsApp",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            608,
+            304
+          ],
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        },
+        {
+          "parameters": {},
+          "id": "3a8462a7-355b-4b13-a010-4c4054a37b12",
+          "name": "Start",
+          "type": "n8n-nodes-base.manualTrigger",
+          "typeVersion": 1,
+          "position": [
+            400,
+            304
+          ]
+        },
+        {
+          "id": "06132da9-f81d-478a-a5c2-3e289c162f4e",
+          "name": "Send Test Email",
+          "type": "n8n-nodes-base.httpRequest",
+          "typeVersion": 4.3,
+          "position": [
+            600,
+            500
+          ],
+          "parameters": {
+            "options": {},
+            "url": "https://secondsutra.com/django/api/n8n/send_email_push_notification/",
+            "jsonBody": "{\"user_id\": \"SS1739108\", \"email_template\": \"follow_up_email\"}",
+            "authentication": "genericCredentialType",
+            "genericAuthType": "httpBearerAuth",
+            "sendBody": true,
+            "method": "POST",
+            "specifyBody": "json"
+          },
+          "credentials": {
+            "httpBearerAuth": {
+              "id": "W5rIXol9OgJjIWb5",
+              "name": "Production"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Start": {
+          "main": [
+            [
+              {
+                "node": "Send Test WhatsApp",
+                "type": "main",
+                "index": 0
+              },
+              {
+                "node": "Send Test Email",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "settings": {
+        "executionOrder": "v1",
+        "saveDataErrorExecution": "all",
+        "saveDataSuccessExecution": "all",
+        "saveManualExecutions": true,
+        "saveExecutionProgress": true,
+        "callerPolicy": "workflowsFromSameOwner",
+        "availableInMCP": false
+      },
+      "staticData": null,
+      "meta": null,
+      "pinData": {},
+      "versionId": "219a6153-0a23-40b5-acb5-73496d589c0d",
+      "activeVersionId": null,
+      "triggerCount": 0,
+      "shared": [
+        {
+          "updatedAt": "2026-01-30T12:14:25.765Z",
+          "createdAt": "2026-01-30T12:14:25.765Z",
+          "role": "workflow:owner",
+          "workflowId": "zGRBkX4xHMEQTB3Y",
+          "projectId": "dNAUCjIYq35LX4Np"
+        }
+      ],
+      "activeVersion": null,
+      "tags": []
+    }
+  ],
+  "nextCursor": null
+}
